@@ -7,8 +7,8 @@ from typing import Optional
 from fastapi import FastAPI
 import torch
 
-# from transformers import AutoModel, AutoTokenizer
-from transformers import GPT2LMHeadModel, GPT2Tokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer
+#from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 # pip list --format=freeze > requirements.txt
 
@@ -18,14 +18,14 @@ app = FastAPI(
     version="beta 0.1",
 )
 
-# # Download models from Hugging face Hub
-# model = AutoModel.from_pretrained("plasticfruits/gpt2-finetuned-how-to-qa")
-# tokenizer = AutoTokenizer.from_pretrained("plasticfruits/gpt2-finetuned-how-to-qa")
+# Download models from Hugging face Hub
+model = AutoModelForCausalLM.from_pretrained("plasticfruits/gpt2-finetuned-how-to-qa")
+tokenizer = AutoTokenizer.from_pretrained("plasticfruits/gpt2-finetuned-how-to-qa")
 
-# load the sentiment model from subfolder
-path = "./model"
-model = GPT2LMHeadModel.from_pretrained(path)
-tokenizer = GPT2Tokenizer.from_pretrained(path)
+# # load the sentiment model from subfolder
+# path = "./model"
+# model = GPT2LMHeadModel.from_pretrained(path)
+# tokenizer = GPT2Tokenizer.from_pretrained(path)
 
 
 def clean_response(user_prompt, response):
@@ -52,8 +52,7 @@ def save_qa_history(user_prompt, response, length):
 
 ### TODOS
 #
-# Convert to post request?
-#
+# set DB for storing history
 
 
 @app.get("/answers")
@@ -76,7 +75,7 @@ def generate_response(user_prompt: str, length: Optional[int] = 300):
             user_prompt, tokenizer.decode(sample_output, skip_special_tokens=True)
         )
         response_dict = {"key": i, "response": response}
-        save_qa_history(user_prompt, response, length)
+        #save_qa_history(user_prompt, response, length)
         data.append(response_dict)
     # output = tokenizer.decode(sample_outputs, skip_special_tokens=True)
     # output = tokenizer.decode(sample_output, skip_special_tokens=True)
