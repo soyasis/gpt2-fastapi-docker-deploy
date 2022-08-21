@@ -1,5 +1,5 @@
 # NLP with PyTorch: How-to Generator
-This project containes a GPT-2 transformer faine-tunned on WikiHow.com entries related to cultural practices.
+This project containes a GPT-2 transformer fine-tuned on WikiHow.com entries related to cultural practices.
 You can test the model, which is currenlty deployed on a DigitalOcean instace here: http://how-to-generator.herokuapp.com/
 
 The ideation and UI has been done in collaboration with Johanna K. Michel
